@@ -62,6 +62,7 @@ pushd e2fs_build
 # make the ext3 file system on the root partition
 ./misc/mke2fs -jv /dev/loop2
 tune2fs -c 0 /dev/loop2
+
 # ensure a clean directory stack back at the working directory
 dirs -c
 pushd $WORKING_DIR
