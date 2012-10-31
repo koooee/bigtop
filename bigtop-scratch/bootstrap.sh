@@ -34,7 +34,7 @@ case $DISTRO in
     centos)
 	;&
     redhat)
-        yum -y install git java-1.6.0-openjdk-devel java-1.6.0-openjdk-devel maven subversion gcc gcc-c++ make fuse fuse-devel lzo-devel sharutils ssl-devel
+        yum -y install git java-1.6.0-openjdk-devel java-1.6.0-openjdk-devel maven subversion gcc gcc-c++ make fuse fuse-devel lzo-devel sharutils rpm-build automake libtool redhat-rpm-config openssl-devel
 	install_apache_forrest $APACHE_FORREST;;
     ubuntu)
 	echo "ubuntu";;
