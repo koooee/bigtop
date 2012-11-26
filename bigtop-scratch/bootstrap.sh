@@ -1,7 +1,8 @@
 # Script to bootstrap a dev environment for Apache BigTop
 # Script should be run via: source bootstrap.sh
 APACHE_FORREST=http://archive.apache.org/dist/forrest/0.8/apache-forrest-0.8.tar.gz
-
+MAVEN=http://mirror.reverse.net/pub/apache/maven/maven-3/3.0.4/binaries/apache-maven-3.0.4-bin.tar.gz
+PROTOBUF=http://protobuf.googlecode.com/files/protobuf-2.4.1.tar.gz
 if [ "$(id -u)" != "0" ]; then
     echo "Run this script as root or sudo";
     exit;
@@ -19,7 +20,6 @@ function install_apache_forrest () {
 	echo "Adding forrest to profile"
 	echo -e "\nexport FORREST_HOME=$PWD" >> /etc/bashrc
 	echo -e "\nexport PATH=$PATH:$FORREST_HOME/bin" >> /etc/bashrc
-	source /etc/bashrc
     fi
     
     # Build it
@@ -28,14 +28,41 @@ function install_apache_forrest () {
     dirs -c
 }
 
+function install_maven () {
+    
+    # Download it
+    pushd /opt
+    wget -O - $1 | tar -xz
+    pushd apache-maven*
+
+    # Setup Environment
+    echo -e "\nexport PATH=$PATH:$PWD/bin" >> /etc/bashrc
+
+    # No need to build since we are downloading the binary
+
+}
+
+function install_protobuf () {
+
+    # Download it
+    pushd /opt
+    wget -O - $1 | tar -xz
+    pushd protobuf*
+
+    # Configure and install it
+    ./configure && make -j $(cat /proc/cpuinfo | grep -c processor) && make install
+}
+
 # Poorly attempt to determine the distribution
 DISTRO=$(cat /proc/version | sed -e 's/ //g' | tr '[:upper:]' '[:lower:]' | egrep -o "redhat|centos|ubuntu|debian|suse" | head -n1)
 case $DISTRO in
     centos)
 	;&
     redhat)
-        yum -y install git java-1.6.0-openjdk-devel java-1.6.0-openjdk-devel maven subversion gcc gcc-c++ make fuse fuse-devel lzo-devel sharutils rpm-build automake libtool redhat-rpm-config openssl-devel
-	install_apache_forrest $APACHE_FORREST;;
+        yum -y install git java-1.6.0-openjdk-devel java-1.6.0-openjdk-devel maven subversion gcc gcc-c++ make fuse fuse-devel lzo-devel sharutils rpm-build automake libtool redhat-rpm-config openssl-devel zlib-devel python-devel libxml2-devel libxslt-devel cyrus-sasl-devel sqlite-devel mysql-devel openldap-devel createrepo
+	install_apache_forrest $APACHE_FORREST
+	install_maven $MAVEN
+	install_protobuf $PROTOBUF;;
     ubuntu)
 	echo "ubuntu";;
     debian)
