@@ -78,7 +78,7 @@ case $DISTRO in
     centos)
 	;&
     redhat)
-        yum -y install git java-1.6.0-openjdk-devel java-1.6.0-openjdk-devel ant subversion gcc gcc-c++ make fuse fuse-devel lzo-devel sharutils rpm-build automake libtool redhat-rpm-config openssl-devel zlib-devel python-devel libxml2-devel libxslt-devel cyrus-sasl-devel sqlite-devel mysql-devel openldap-devel createrepo
+        yum -y install git java-1.6.0-openjdk-devel java-1.6.0-openjdk-devel javacc ant subversion gcc gcc-c++ make fuse fuse-devel lzo-devel sharutils rpm-build automake libtool redhat-rpm-config openssl-devel zlib-devel python-devel libxml2-devel libxslt-devel cyrus-sasl-devel sqlite-devel mysql-devel openldap-devel createrepo
 	install_apache_forrest $APACHE_FORREST
 	install_maven $MAVEN
 	install_protobuf $PROTOBUF;;
