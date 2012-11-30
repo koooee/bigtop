@@ -9,11 +9,14 @@ if [ "$(id -u)" != "0" ]; then
     exit;
 fi
 
+REAL_USER=$(who am i | cut -d" " -f1)
+
 function install_apache_forrest () {
     
     # Download it
     pushd /opt
     wget -O - $1 | tar -xz
+    chown $REAL_USER apache-forrest-*
     pushd apache-forrest-*
 
     # Set up environment
@@ -34,6 +37,7 @@ function install_maven () {
     # Download it
     pushd /opt
     wget -O - $1 | tar -xz
+    chown $REAL_USER apache-maven*
     pushd apache-maven*
 
     # Setup Environment
@@ -50,6 +54,7 @@ function install_protobuf () {
     # Download it
     pushd /opt
     wget -O - $1 | tar -xz
+    chown $REAL_USER protobuf*
     pushd protobuf*
 
     # Configure and install it
@@ -62,6 +67,7 @@ function install_ant () {
     # Download it
     pushd /opt
     wget -O - $1 | tar -xz
+    chown $REAL_USER apache-ant*
     pushd apache-ant*
 
     # Setup Environment
