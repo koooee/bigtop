@@ -67,6 +67,8 @@ function install_ant () {
     # Setup Environment
     echo -e "\nexport PATH=$PATH:$PWD/bin" >> /etc/bashrc
 
+    ln -s $PWD/bin/ant /usr/bin/ant
+
     dirs -c
 }
 
