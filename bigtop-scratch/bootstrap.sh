@@ -7,13 +7,7 @@ ANT=http://apache.mirrors.lucidnetworks.net//ant/binaries/apache-ant-1.8.4-bin.t
 REAL_USER=$(who am i | cut -d" " -f1)
 PROFILE=/etc/bashrc
 
-# Check for java
-if [ "$JAVA_HOME" == "" ]; then
-    echo "JAVA_HOME is not set.  Please set it with one of the following:"
-    echo "    source /usr/lib/hadoop/conf/hadoop-env.sh"
-    echo "    export JAVA_HOME=/path/to/root/dir/of/java"
-    exit 1
-fi
+. check-env.sh
 
 # Check if we have super powers
 if [ "$(id -u)" != "0" ]; then
@@ -35,7 +29,8 @@ function install_apache_forrest () {
 	echo -e "\nexport FORREST_HOME=$PWD" >> $PROFILE
 	echo -e "\nexport PATH=$PATH:$FORREST_HOME/bin" >> $PROFILE
     fi
-    
+    source $PROFILE
+
     # Build it
     pushd main
     ./build.sh
@@ -52,6 +47,7 @@ function install_maven () {
 
     # Setup Environment
     echo -e "\nexport PATH=$PATH:$PWD/bin" >> $PROFILE
+    source $PROFILE
 
     # No need to build since we are downloading the binary
 
@@ -82,7 +78,7 @@ function install_ant () {
 
     # Setup Environment
     echo -e "\nexport PATH=$PATH:$PWD/bin" >> $PROFILE
-
+    source $PROFILE
     ln -s $PWD/bin/ant /usr/bin/ant
 
     dirs -c
