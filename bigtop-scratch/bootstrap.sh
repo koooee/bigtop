@@ -6,6 +6,15 @@ PROTOBUF=http://protobuf.googlecode.com/files/protobuf-2.4.1.tar.gz
 ANT=http://apache.mirrors.lucidnetworks.net//ant/binaries/apache-ant-1.8.4-bin.tar.gz
 REAL_USER=$(who am i | cut -d" " -f1)
 PROFILE=/etc/bashrc
+
+# Check for java
+if [ "$JAVA_HOME" == "" ]; then
+    echo "JAVA_HOME is not set.  Please set it with one of the following:"
+    echo "    source /usr/lib/hadoop/conf/hadoop-env.sh"
+    echo "    export JAVA_HOME=/path/to/root/dir/of/java"
+    exit 1
+fi
+
 # Check if we have super powers
 if [ "$(id -u)" != "0" ]; then
     echo "Run this script as root or sudo";
@@ -85,10 +94,11 @@ case $DISTRO in
     centos)
 	;&
     redhat)
-        yum -y install git java-1.6.0-openjdk-devel java-1.6.0-openjdk-devel javacc ant subversion gcc gcc-c++ make fuse fuse-devel lzo-devel sharutils rpm-build automake libtool redhat-rpm-config openssl-devel zlib-devel python-devel libxml2-devel libxslt-devel cyrus-sasl-devel sqlite-devel mysql-devel openldap-devel createrepo asciidoc xmlto python-setuptools
+        yum -y install git java-1.6.0-openjdk-devel java-1.6.0-openjdk-devel subversion gcc gcc-c++ make fuse fuse-devel lzo-devel sharutils rpm-build automake libtool redhat-rpm-config openssl-devel zlib-devel python-devel libxml2-devel libxslt-devel cyrus-sasl-devel sqlite-devel mysql-devel openldap-devel createrepo asciidoc xmlto python-setuptools
 	install_apache_forrest $APACHE_FORREST
 	install_maven $MAVEN
-	install_protobuf $PROTOBUF;;
+	install_protobuf $PROTOBUF
+	install_ant $ANT;;
 	
     ubuntu)
 	echo "ubuntu";;
@@ -99,3 +109,5 @@ case $DISTRO in
     *)
 	echo "Couldn't determine your distribution."
 esac
+
+source $PROFILE
