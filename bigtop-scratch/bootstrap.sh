@@ -9,8 +9,9 @@ REAL_USER=$(who am i | cut -d" " -f1)
 PROFILE=~/bigtop-env.sh
 NEW_PATH=$PATH
 
+# Run the bigtop environment test
 ./check-env.sh
-exit 
+
 # Check if we have super powers
 if [ "$(id -u)" != "0" ]; then
     echo "Run this script as root or sudo";
@@ -27,12 +28,9 @@ function install_apache_forrest () {
     ln -s $PWD/bin/forrest /bin/forrest
 
     # Set up environment
-    if [ "$(grep -c FORREST_HOME $PROFILE)" -eq "0" ]; then
-	echo "Adding forrest to profile"
-	echo -e "\nexport FORREST_HOME=$PWD" >> $PROFILE
-	NEW_PATH=$NEW_PATH:$PWD:$PWD/bin
-    fi
-
+    echo -e "\nexport FORREST_HOME=$PWD" >> $PROFILE
+    NEW_PATH=$NEW_PATH:$PWD:$PWD/bin
+    
     # Build it
     pushd main
     ./build.sh
@@ -51,7 +49,6 @@ function install_maven () {
     NEW_PATH=$NEW_PATH:$PWD/bin
 
     # No need to build since we are downloading the binary
-
     dirs -c
 
 }
