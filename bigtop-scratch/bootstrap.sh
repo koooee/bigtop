@@ -21,6 +21,7 @@ function install_apache_forrest () {
     wget -O - $1 | tar -xz
     chown -R $REAL_USER apache-forrest-*
     pushd apache-forrest-*
+    ln -s $PWD/bin/forrest /bin/forrest
 
     # Set up environment
     if [ "$(grep -c FORREST_HOME $PROFILE)" -eq "0" ]; then
@@ -102,5 +103,5 @@ case $DISTRO in
 	echo "Couldn't determine your distribution."
 esac
 
-echo -e "\nexport PATH=\$PATH:$NEW_PATH" >> $PROFILE
+echo -e "\nexport PATH=$NEW_PATH" >> $PROFILE
 echo "Run This Command: source $PROFILE"
