@@ -8,6 +8,9 @@ ANT=http://apache.mirrors.lucidnetworks.net//ant/binaries/apache-ant-1.8.4-bin.t
 REAL_USER=$(who am i | cut -d" " -f1)
 PROFILE=~/bigtop-env.sh
 NEW_PATH=$PATH
+
+./check-env.sh
+exit 
 # Check if we have super powers
 if [ "$(id -u)" != "0" ]; then
     echo "Run this script as root or sudo";
