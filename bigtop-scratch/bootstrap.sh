@@ -6,7 +6,7 @@ MAVEN=http://mirror.reverse.net/pub/apache/maven/maven-3/3.0.4/binaries/apache-m
 PROTOBUF=http://protobuf.googlecode.com/files/protobuf-2.4.1.tar.gz
 ANT=http://apache.mirrors.lucidnetworks.net//ant/binaries/apache-ant-1.8.4-bin.tar.gz
 REAL_USER=$(who am i | cut -d" " -f1)
-PROFILE=bigtop-env.sh
+PROFILE=~/bigtop-env.sh
 NEW_PATH=$PATH
 # Check if we have super powers
 if [ "$(id -u)" != "0" ]; then
