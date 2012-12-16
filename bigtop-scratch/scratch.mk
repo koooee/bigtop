@@ -64,11 +64,11 @@ check_loopdevices:
 # so he tinks we are real devices.
 setup_loopdevices: create_filelayout check_loopdevices
 	losetup /dev/loop0 $(BUILD_FILE_FULLPATH); \
-	fdisk -l $(BUILD_FILE_FULLPATH) \
+	$(shell fdisk -l $(BUILD_FILE_FULLPATH) \
 	| tail -n2 | awk '{print $$2}' \
 	| while read line; do \
 		echo $$line; \
-		losetup -o $$(echo "$$line-1" | bc) /dev/loop$$(echo "$$i+1" | bc) /dev/loop0; i=$$(echo "$$i+1" | bc); done
+		losetup -o $$(echo "$$line-1" | bc) /dev/loop$$(echo "$$i+1" | bc) /dev/loop0; i=$$(echo "$$i+1" | bc); done)
 # Do this to ensure a clean FS toolchain
 # if we use the system built FS toolchain funky boot stuff can happen, per LFS book
 build_e2fs: setup_loopdevices
