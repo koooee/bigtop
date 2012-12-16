@@ -9,8 +9,6 @@ REAL_USER=$(who am i | cut -d" " -f1)
 PROFILE=~/bigtop-env.sh
 NEW_PATH=$PATH
 
-# Run the bigtop environment test
-./check-env.sh
 
 # Check if we have super powers
 if [ "$(id -u)" != "0" ]; then
@@ -103,3 +101,4 @@ case $DISTRO in
 esac
 
 echo "Run This Command: source $PROFILE"
+echo "Then Run This Command: ./check-env.sh"
