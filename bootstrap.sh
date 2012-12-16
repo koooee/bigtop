@@ -91,11 +91,11 @@ case $DISTRO in
     install_protobuf $PROTOBUF
     install_ant $ANT;;
     ubuntu)
-	echo "ubuntu";;
+	echo "ubuntu is not yet supported.";;
     debian)
-	echo "debian";;
+	echo "debian is not yest supported";;
     suse)
-	echo "suse";;
+	echo "suse is not yet supported";;
     *)
 	echo "Couldn't determine your distribution."
 esac
