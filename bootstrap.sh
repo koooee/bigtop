@@ -25,11 +25,11 @@ function install_apache_forrest () {
     wget -O - $1 | tar -xz
     chown -R $REAL_USER apache-forrest-*
     pushd apache-forrest-*
-    ln -s $PWD/bin/forrest /bin/forrest
+    
 
     # Set up environment
     echo -e "\nexport FORREST_HOME=$PWD" >> $PROFILE
-    NEW_PATH=$NEW_PATH:$PWD:$PWD/bin
+    ln -s $PWD/bin/forrest /usr/bin/forrest
     
     # Build it
     pushd main
@@ -46,7 +46,7 @@ function install_maven () {
     pushd apache-maven*
 
     # Setup Environment
-    NEW_PATH=$NEW_PATH:$PWD/bin
+    ln -s $PWD/bin/mvn /usr/bin/mvn
 
     # No need to build since we are downloading the binary
     dirs -c
@@ -76,7 +76,6 @@ function install_ant () {
     pushd apache-ant*
 
     # Setup Environment
-    NEW_PATH=$NEW_PATH:$PWD/bin
     ln -s $PWD/bin/ant /usr/bin/ant
 
     dirs -c
@@ -103,5 +102,4 @@ case $DISTRO in
 	echo "Couldn't determine your distribution."
 esac
 
-echo -e "\nexport PATH=$NEW_PATH" >> $PROFILE
 echo "Run This Command: source $PROFILE"
